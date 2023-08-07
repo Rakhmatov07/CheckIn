@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>QR Code Scanner</title>
+  <link rel="stylesheet" type="text/css" href="styleCheckQR.css">
+  <script src="scriptCheckQR.js"></script>
+</head>
+<body>
+  <h1>QR Code Scanner</h1>
+  <hr><br>
+
+  <div class="row">
+
+    <div class="col">
+      <div style="width:500px;" id="reader"></div>
+    </div>
+
+    <div class="col" style="padding:30px;">
+      <h4>SCAN RESULT</h4>
+      <div id="result">Result Here</div>
+    </div>
+
+  </div>
+
+  <script type="text/javascript">
+    
+    function onScanSuccess( qrCodeMessage ) {
+        document.getElementById('result').innerHTML = '<span class="result">'+qrCodeMessage+'</span>';
+        fetch("http://localhost:4000/entrance", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ qrCodeMessage }),
+        }).then((res) => res.json())
+          .then((data) => {
+            if (data.message === "success") {
+              window.location.href = "success.html";
+            } else {
+              window.location.href = "failed.html";
+            }
+          })
+        .catch(error => {
+          window.location.href = "failed.html";
+        });
+    };
+
+    function onScanError(errorMessage) {
+    };
+
+    let html5QrcodeScanner = new Html5QrcodeScanner("reader", { fps: 10, qrbox: 250 });
+    html5QrcodeScanner.render(onScanSuccess, onScanError);
+
+  </script>
+</body>
+</html>

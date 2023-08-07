@@ -1,0 +1,30 @@
+body {
+    font-family: Arial, sans-serif;
+    text-align: center;
+  }
+  
+  h1 {
+    margin-top: 20px;
+  }
+  
+  #qr-video {
+    width: 80%;
+    max-width: 500px;
+    margin: 20px auto;
+  }
+  
+  #result {
+    font-size: 18px;
+    font-weight: bold;
+    margin: 20px;
+    border: 2px solid #333;
+    padding: 10px;
+  }
+  .row{
+    display:flex;
+    margin-left: 500px;
+  }
+  h1, h4{
+      background-color: aquamarine;
+  }
+  
