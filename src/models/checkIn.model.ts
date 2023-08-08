@@ -1,6 +1,6 @@
 import { Schema, model } from "mongoose";
 
-const CheckIn = new Schema({
+const CheckIn: Schema = new Schema({
     userId: {
         type: Schema.ObjectId,
         required: true,

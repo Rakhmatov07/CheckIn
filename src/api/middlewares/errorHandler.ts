@@ -1,4 +1,6 @@
-export const errorHandler = (err, _, res) => {
+import { Request, Response } from "express";
+
+export const errorHandler = (err: any, req: Request, res: Response) => {
     if( err instanceof Error ) {
         return res.status(500).json({message: 'Internal server error'});
     }else{

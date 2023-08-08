@@ -1,13 +1,17 @@
-import { userValidation } from "../../utilities/user.validation.js";
-import { CustomError } from "../../utilities/customError.js";
-import User from "../../models/auth.model.js";
-import { signPayload } from '../../utilities/jwt.js';
+import { userValidation } from "../../utilities/user.validation";
+import { CustomError } from "../../utilities/customError";
+import User from "../../models/auth.model";
+import { signPayload } from '../../utilities/jwt';
 import qrcode from "qrcode";
+import { NextFunction, Request, RequestHandler, Response } from "express";
+import { IUser } from "../../types/user.type";
+import { ILogin } from "../../types/login.type";
 
-export const register = async(req, res, next) => {
+
+export const register: RequestHandler = async(req: Request, res: Response, next: NextFunction): Promise<void> => {
     try {
-        const { firstname, lastname, phoneNumber } = req.body;
-        const isValid = userValidation({ firstname, lastname, phoneNumber });
+        const { firstname, lastname, phoneNumber } = req.body as IUser;
+        const isValid = userValidation({ firstname, lastname, phoneNumber }) as String | Boolean;
 
         if(isValid) throw new CustomError('Bad Request', 400);
 
@@ -29,9 +33,9 @@ export const register = async(req, res, next) => {
     }
 };
 
-export const login = async(req, res, next) => {
+export const login: RequestHandler = async(req: Request, res: Response, next: NextFunction): Promise<void> => {
     try {
-        const { firstname, phoneNumber } = req.body;
+        const { firstname, phoneNumber } = req.body as unknown as ILogin;
 
         const findUser = await User.findOne({ firstname, phoneNumber });
         if(!findUser) throw new CustomError('User Not Found', 404);
@@ -50,8 +54,7 @@ export const login = async(req, res, next) => {
     }
 };
 
-
-export const getRegister = (_, res, next) => {
+export const getRegister: RequestHandler = (_: Request, res: Response, next: NextFunction): void => {
     try {
         res.render('registration');
     } catch (error) {
@@ -59,7 +62,7 @@ export const getRegister = (_, res, next) => {
     }
 };
 
-export const getLogin = (_, res, next) => {
+export const getLogin: RequestHandler = (_: Request, res: Response, next: NextFunction): void => {
     try {
         res.render('login');
     } catch (error) {

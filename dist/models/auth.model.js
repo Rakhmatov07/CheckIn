@@ -1,7 +1,7 @@
-import mongoose from "mongoose";
-const { Schema, model } = mongoose;
-
-const User = new Schema({
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+const mongoose_1 = require("mongoose");
+const User = new mongoose_1.Schema({
     firstname: {
         type: String,
         required: true
@@ -15,9 +15,7 @@ const User = new Schema({
         required: true,
         unique: true
     }
-},
-{
+}, {
     timestamps: true
 });
-
-export default model('User', User);
+exports.default = (0, mongoose_1.model)('User', User);
